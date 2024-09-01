@@ -1,6 +1,30 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from crewai_tools import ScrapeWebsiteTool
+from crewai_tools import ScrapeWebsiteTool, PDFSearchTool, FileReadTool
+import os
+
+from llm import create_claude_llm, create_groq_llm
+from src.tailor_resume.tools.custom_tool import create_markdown_file
+
+pdf_config = dict(
+    llm=dict(
+        # or google, openai, anthropic, llama2, ...
+        provider="groq",
+        config=dict(
+            model="llama3-8b-8192",
+            temperature=0.5,
+            api_key=os.getenv('GROQ_API_KEY'),
+        ),
+    ),
+    embedder=dict(
+        # or openai, ollama, ...
+        provider="huggingface",
+        config=dict(
+            model="BAAI/bge-small-en-v1.5",
+        ),
+    ),
+)
+
 
 @CrewBase
 class TailorResumeCrew():
@@ -9,12 +33,22 @@ class TailorResumeCrew():
     tasks_config = 'config/tasks.yaml'
 
     @agent
+    def linkedin_pdf_cv_reader(self) -> Agent:
+        return Agent(
+            config=self.agents_config['linkedin_pdf_cv_reader'],
+            allow_delegation=False,
+            verbose=True,
+            llm=create_groq_llm()
+        )
+
+    @agent
     def job_requirements_extractor(self) -> Agent:
         return Agent(
             config=self.agents_config['job_requirements_extractor'],
             tools=[ScrapeWebsiteTool()],
             allow_delegation=False,
-            verbose=True
+            verbose=True,
+            llm=create_groq_llm(model_name='llama-3.1-70b-versatile')
         )
 
     @agent
@@ -22,7 +56,17 @@ class TailorResumeCrew():
         return Agent(
             config=self.agents_config['resume_tailor'],
             allow_delegation=False,
-            verbose=True
+            verbose=True,
+            tools=[create_markdown_file, FileReadTool()],
+            llm=create_claude_llm()
+        )
+
+    @task
+    def pdf_to_md_cv_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['pdf_to_md_cv_task'],
+            agent=self.linkedin_pdf_cv_reader(),
+            tools=[PDFSearchTool(config=pdf_config), create_markdown_file],
         )
 
     @task
@@ -46,5 +90,5 @@ class TailorResumeCrew():
             agents=self.agents,
             tasks=self.tasks,
             process=Process.sequential,
-            verbose=2,
+            verbose=True,
         )
