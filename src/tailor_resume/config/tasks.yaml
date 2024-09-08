@@ -102,8 +102,3 @@ pdf_to_md_cv_task:
     - **GitHub**: github.com/ciclano-da-silva
     [/YAML]
 
-translation_task:
-  description: >
-    Translate the resume in {crew_generated_resume} into {target_language}.
-  expected_output: >
-    The resume in {target_language} saved in the {crew_generated_resume}.

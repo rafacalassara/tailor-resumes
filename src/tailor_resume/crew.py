@@ -63,15 +63,6 @@ class TailorResumeCrew():
             llm=create_claude_llm()
         )
 
-    # @agent
-    # def translator(self) -> Agent:
-    #     return Agent(
-    #         config=self.agents_config['translator'],
-    #         allow_delegation=False,
-    #         verbose=True,
-    #         llm=create_groq_llm('llama-3.1-70b-versatile')
-    #     )
-
     @task
     def pdf_to_md_cv_task(self) -> Task:
         return Task(
@@ -93,14 +84,6 @@ class TailorResumeCrew():
             config=self.tasks_config['tailor_resume_task'],
             agent=self.resume_tailor(),
         )
-
-    # @task
-    # def translation_task(self) -> Task:
-    #     return Task(
-    #         config=self.tasks_config['translation_task'],
-    #         agent=self.translator(),
-    #         tools=[FileReadTool(), create_markdown_file],
-    #     )
 
     @crew
     def crew(self) -> Crew:
