@@ -23,12 +23,14 @@ tailor_resume_task:
     never fake this infromations, it should only include things you know the person
     is good at and can do.
     we are optmizeing for the person to get an interview. do not include ```.
-    save the resume in {target_cv_filename}.
+    the resume language should be the same as the language of the job posting.
+    save the resume in {crew_generated_resume}.
 
 pdf_to_md_cv_task:
   description: >
-    Extract relevant information from the given CV. Focus on skills, experience,
-    education, and key achievements using the PDF tool.
+    Extract relevant information from the given CV. 
+    Focus on skills, experience, education, key achievements, etc.
+    Use the PDF tool to extract information from the CV.
     Ensure to capture the candidate's professional summary, technical skills,
     work history, and educational background.
 
@@ -80,6 +82,19 @@ pdf_to_md_cv_task:
     - Recognized as Employee of the Month for outstanding performance and dedication.
     - Implemented a CI/CD pipeline that reduced deployment times by 50%.
 
+    ## Projects
+    - **AI Chatbot**: Developed an AI chatbot using Python and TensorFlow that provides customer support for e-commerce platforms.
+    - **Predictive Analytics Platform**: Built a platform that uses machine learning to predict stock market trends, leveraging AWS for deployment and scalability.
+
+    ## Certifications
+    - **AWS Certified Solutions Architect** | 2018
+    - **Certified Kubernetes Administrator (CKA)** | 2020
+
+    ## Personal Interests
+    - AI Research
+    - Open Source Contribution
+    - Blogging about AI and Machine Learning advancements
+
     ## Contact Information
     - **Email**: ciclano_da_silva@example.com
     - **Phone**: (123) 456-7890
@@ -87,4 +102,8 @@ pdf_to_md_cv_task:
     - **GitHub**: github.com/ciclano-da-silva
     [/YAML]
 
-
+translation_task:
+  description: >
+    Translate the resume in {crew_generated_resume} into {target_language}.
+  expected_output: >
+    The resume in {target_language} saved in the {crew_generated_resume}.

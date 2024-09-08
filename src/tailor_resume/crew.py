@@ -3,7 +3,7 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import ScrapeWebsiteTool, PDFSearchTool, FileReadTool
 import os
 
-from llm import create_claude_llm, create_groq_llm
+from .llm import create_claude_llm, create_groq_llm
 from src.tailor_resume.tools.custom_tool import create_markdown_file
 
 pdf_config = dict(
@@ -11,7 +11,7 @@ pdf_config = dict(
         # or google, openai, anthropic, llama2, ...
         provider="groq",
         config=dict(
-            model="llama3-8b-8192",
+            model="llama3-70b-8192",
             temperature=0.5,
             api_key=os.getenv('GROQ_API_KEY'),
         ),
@@ -38,7 +38,8 @@ class TailorResumeCrew():
             config=self.agents_config['linkedin_pdf_cv_reader'],
             allow_delegation=False,
             verbose=True,
-            llm=create_groq_llm()
+            llm=create_claude_llm(),
+            # llm=create_groq_llm('llama3-70b-8192')
         )
 
     @agent
@@ -48,7 +49,8 @@ class TailorResumeCrew():
             tools=[ScrapeWebsiteTool()],
             allow_delegation=False,
             verbose=True,
-            llm=create_groq_llm(model_name='llama-3.1-70b-versatile')
+            llm=create_claude_llm(),
+            # llm=create_groq_llm(model_name='llama-3.1-70b-versatile')
         )
 
     @agent
@@ -60,6 +62,15 @@ class TailorResumeCrew():
             tools=[create_markdown_file, FileReadTool()],
             llm=create_claude_llm()
         )
+
+    # @agent
+    # def translator(self) -> Agent:
+    #     return Agent(
+    #         config=self.agents_config['translator'],
+    #         allow_delegation=False,
+    #         verbose=True,
+    #         llm=create_groq_llm('llama-3.1-70b-versatile')
+    #     )
 
     @task
     def pdf_to_md_cv_task(self) -> Task:
@@ -82,6 +93,14 @@ class TailorResumeCrew():
             config=self.tasks_config['tailor_resume_task'],
             agent=self.resume_tailor(),
         )
+
+    # @task
+    # def translation_task(self) -> Task:
+    #     return Task(
+    #         config=self.tasks_config['translation_task'],
+    #         agent=self.translator(),
+    #         tools=[FileReadTool(), create_markdown_file],
+    #     )
 
     @crew
     def crew(self) -> Crew:
