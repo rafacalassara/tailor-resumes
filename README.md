@@ -123,7 +123,3 @@ To run the Gradio app, use the following command from the project root directory
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the
