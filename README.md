@@ -101,6 +101,13 @@ Users can customize the program by modifying:
 - Task definitions in `config/tasks.yaml`
 - The `crew.py` file to add custom logic or tools
 
+## Running the Gradio App
+
+To run the Gradio app, use the following command from the project root directory:
+   ```bash
+   python gradio/app.py
+   ```
+
 ## Advanced Features
 
 - The program includes a training function that can improve the AI agents' performance over multiple iterations
