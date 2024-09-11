@@ -9,10 +9,16 @@ from src.tailor_resume.tools.custom_tool import create_markdown_file
 pdf_config = dict(
     llm=dict(
         # or google, openai, anthropic, llama2, ...
+        # provider="anthropic",
+        # config=dict(
+        #     model="claude-3-5-sonnet-20240620",
+        #     temperature=0.1,
+        #     api_key=os.getenv('ANTHROPIC_API_KEY'),
+        # ),
         provider="groq",
         config=dict(
             model="llama3-70b-8192",
-            temperature=0.5,
+            temperature=0.1,
             api_key=os.getenv('GROQ_API_KEY'),
         ),
     ),

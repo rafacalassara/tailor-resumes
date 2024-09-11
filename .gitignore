@@ -2,6 +2,7 @@
 __pycache__/
 
 db/
-src/resumes/*
+src/resumes/*.pdf
+src/resumes/target_resume.md
 
 crew_generated_resume.md

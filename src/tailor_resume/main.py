@@ -1,15 +1,17 @@
 #!/usr/bin/env python
-import sys
 from tailor_resume.crew import TailorResumeCrew
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def run():
     inputs = {
-        "job_posting": "https://www.linkedin.com/jobs/view/4004986314/",
-        "linkedin_source_cv_filename": "src/resumes/linkedin_cv_rafael_pt_br.pdf",
-        "linkedin_target_cv_filename": "src/resumes/linkedin_cv.md",
+        "job_posting": os.getenv('JOB_POSTING_URL'),
+        "base_resume": "/home/rafaelcalassara/Programming/AI/Agents/cv_maker/src/resumes/base_resume.md",
+        "linkedin_source_cv_filename": "/home/rafaelcalassara/Programming/AI/Agents/cv_maker/src/resumes/linkedin_cv_rafael_pt_br.pdf",
+        "linkedin_target_cv_filename": "/home/rafaelcalassara/Programming/AI/Agents/cv_maker/src/resumes/target_resume.md",
         "crew_generated_resume": "crew_generated_resume.md",
-        # "target_language" : "pt-BR",
     }
     TailorResumeCrew().crew().kickoff(inputs=inputs)
 
@@ -20,10 +22,10 @@ def train():
     """
     inputs = {
         "job_posting": "https://www.linkedin.com/jobs/view/4004986314/",
-        "linkedin_source_cv_filename": "src/resumes/linkedin_cv_rafael_pt_br.pdf",
-        "linkedin_target_cv_filename": "src/resumes/linkedin_cv.md",
+        "base_resume": "/home/rafaelcalassara/Programming/AI/Agents/cv_maker/src/resumes/base_resume.md",
+        "linkedin_source_cv_filename": "src/resumes/source_resume.pdf",
+        "linkedin_target_cv_filename": "/home/rafaelcalassara/Programming/AI/Agents/cv_maker/src/resumes/target_resume.md",
         "crew_generated_resume": "crew_generated_resume.md",
-        # "target_language" : "pt-BR",
     }
     try:
         TailorResumeCrew().crew().train(
