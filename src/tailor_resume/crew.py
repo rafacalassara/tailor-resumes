@@ -4,17 +4,10 @@ from crewai_tools import ScrapeWebsiteTool, PDFSearchTool, FileReadTool
 import os
 
 from .llm import create_claude_llm, create_groq_llm
-from src.tailor_resume.tools.custom_tool import create_markdown_file
+from .tools.custom_tool import create_markdown_file
 
 pdf_config = dict(
     llm=dict(
-        # or google, openai, anthropic, llama2, ...
-        # provider="anthropic",
-        # config=dict(
-        #     model="claude-3-5-sonnet-20240620",
-        #     temperature=0.1,
-        #     api_key=os.getenv('ANTHROPIC_API_KEY'),
-        # ),
         provider="groq",
         config=dict(
             model="llama3-70b-8192",
@@ -45,7 +38,7 @@ class TailorResumeCrew():
             allow_delegation=False,
             verbose=True,
             llm=create_claude_llm(),
-            # llm=create_groq_llm('llama3-70b-8192')
+            # llm=create_groq_llm('llama3-70b-8192', temperature=0.01)
         )
 
     @agent
@@ -56,7 +49,7 @@ class TailorResumeCrew():
             allow_delegation=False,
             verbose=True,
             llm=create_claude_llm(),
-            # llm=create_groq_llm(model_name='llama-3.1-70b-versatile')
+            # llm=create_groq_llm(model_name='llama3-groq-70b-8192-tool-use-preview', temperature=0.01)
         )
 
     @agent
@@ -66,6 +59,7 @@ class TailorResumeCrew():
             allow_delegation=False,
             verbose=True,
             tools=[create_markdown_file, FileReadTool()],
+            # llm=create_groq_llm(model_name='llama-3.1-70b-versatile'),
             llm=create_claude_llm()
         )
 
@@ -75,6 +69,7 @@ class TailorResumeCrew():
             config=self.tasks_config['pdf_to_md_cv_task'],
             agent=self.linkedin_pdf_cv_reader(),
             tools=[PDFSearchTool(config=pdf_config), create_markdown_file],
+            # output='crew_generated_resume.md'
         )
 
     @task

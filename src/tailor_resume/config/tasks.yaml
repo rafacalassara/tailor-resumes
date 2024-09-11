@@ -16,7 +16,7 @@ tailor_resume_task:
     the candidate's abilities.
 
     Original Job Posting: {job_posting}
-    Initial Resume: {linkedin_target_cv_filename}
+    Initial Resume: {linkedin_target_resume_filename}
   expected_output: >
     A tailor-made resume in markdown format that highlights the most relevant
     skills, experiences, and qualifications for the job posting, making sure
@@ -25,20 +25,25 @@ tailor_resume_task:
     we are optmizeing for the person to get an interview. do not include ```.
     the resume language should be the same as the language of the job posting.
     save the resume in {crew_generated_resume}.
+    use the FileReadTool to read the initial resume in {linkedin_target_resume_filename} and the informations
+    from the extract_job_requirements_task.
 
 pdf_to_md_cv_task:
   description: >
-    Extract relevant information from the given CV. 
+    Extract relevant information from the PDF resume. 
     Focus on skills, experience, education, key achievements, etc.
     Use the PDF tool to extract information from the CV.
     Ensure to capture the candidate's professional summary, technical skills,
     work history, and educational background.
+    Create a markdown file with the extracted information.
 
-    CV source PDF file: {linkedin_source_cv_filename}
-    CV target filename: {linkedin_target_cv_filename}
+    resume source PDF file: {linkedin_source_resume_filename}
+    resume target filepath: {linkedin_target_resume_filename}
+
   expected_output: >
     A structured summary of the CV in MD format
     If you don't find a information, dont mention it on the generated resume.
-    Use the create_markdown_file to save the resume in a MD file.
+    Use the create_markdown_file tool to save the resume in a MD file.
+    create_markdown_file congig: content = genered resume, filename = {linkedin_target_resume_filename}
     A resume should look like the one in {base_resume}
 

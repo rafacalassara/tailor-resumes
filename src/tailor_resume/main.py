@@ -9,8 +9,8 @@ def run():
     inputs = {
         "job_posting": os.getenv('JOB_POSTING_URL'),
         "base_resume": "/src/resumes/base_resume.md",
-        "linkedin_source_cv_filename": "/src/resumes/source_resume.pdf",
-        "linkedin_target_cv_filename": "/src/resumes/target_resume.md",
+        "linkedin_source_resume_filename": "/src/resumes/source_resume.pdf",
+        "linkedin_target_resume_filename": "/src/resumes/target_resume.md",
         "crew_generated_resume": "crew_generated_resume.md",
     }
     TailorResumeCrew().crew().kickoff(inputs=inputs)
@@ -23,8 +23,8 @@ def train():
     inputs = {
         "job_posting": os.getenv('JOB_POSTING_URL'),
         "base_resume": "/src/resumes/base_resume.md",
-        "linkedin_source_cv_filename": "/src/resumes/source_resume.pdf",
-        "linkedin_target_cv_filename": "/src/resumes/target_resume.md",
+        "linkedin_source_resume_filename": "/src/resumes/source_resume.pdf",
+        "linkedin_target_resume_filename": "/src/resumes/target_resume.md",
         "crew_generated_resume": "crew_generated_resume.md",
     }
     try:

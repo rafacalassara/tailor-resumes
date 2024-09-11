@@ -81,8 +81,8 @@ TailorResume Crew is an advanced AI-powered system designed to tailor resumes fo
 
 3. On `src/tailor_resume/main.py` modify:
    - `base_resume` to the path of your base resume
-   - `linkedin_source_cv_filename` to the path of your Linkedin resume 
-   - `linkedin_target_cv_filename` to the path of your target resume in MD format
+   - `linkedin_source_resume_filename` to the path of your Linkedin resume 
+   - `linkedin_target_resume_filename` to the path of your target resume in MD format
 
 
 4. Run the main script:
