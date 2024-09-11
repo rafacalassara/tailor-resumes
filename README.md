@@ -1,57 +1,122 @@
 # TailorResume Crew
 
-Welcome to the TailorResume Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+TailorResume Crew is an advanced AI-powered system designed to tailor resumes for specific job postings. This program leverages the crewAI framework to create a multi-agent AI system that collaborates to produce customized resumes.
+
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Advanced Features](#advanced-features)
+- [Tools and Technologies](#tools-and-technologies)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Features
+
+- Reads a PDF resume and converts it to Markdown format
+- Extracts job requirements from a given job posting URL
+- Tailors the resume based on the extracted job requirements
+- Utilizes multiple AI agents for different tasks:
+  - LinkedIn PDF CV Reader
+  - Job Requirements Extractor
+  - Resume Tailor
 
 ## Installation
 
-Ensure you have Python >=3.10 <=3.13 installed on your system. This project uses [Poetry](https://python-poetry.org/) for dependency management and package handling, offering a seamless setup and execution experience.
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/TailorResume-Crew.git
+   cd TailorResume-Crew
+   ```
 
-First, if you haven't already, install Poetry:
+2. Create a virtual environment (optional but recommended):
+   ```
+   python -m venv venv
+   ```
 
-```bash
-pip install poetry
-```
+3. Activate the virtual environment:
+   - On Windows:
+     ```
+     venv\Scripts\activate
+     ```
+   - On macOS and Linux:
+     ```
+     source venv/bin/activate
+     ```
 
-Next, navigate to your project directory and install the dependencies:
+5. Ensure you have Python >=3.10 <=3.13 installed on your system. This project uses [Poetry](https://python-poetry.org/) for dependency management and package handling, offering a seamless setup and execution experience.
 
-1. First lock the dependencies and then install them:
-```bash
-poetry lock
-```
-```bash
-poetry install
-```
-### Customizing
+   First, if you haven't already, install Poetry:
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+   ```bash
+   pip install poetry
+   ```
 
-- Modify `src/tailor_resume/config/agents.yaml` to define your agents
-- Modify `src/tailor_resume/config/tasks.yaml` to define your tasks
-- Modify `src/tailor_resume/crew.py` to add your own logic, tools and specific args
-- Modify `src/tailor_resume/main.py` to add custom inputs for your agents and tasks
+   1. First lock the dependencies and then install them:
+   ```bash
+   poetry lock
+   ```
+   ```bash
+   poetry install
+   ```
 
-## Running the Project
+5. Set up environment variables:
+   Create a copy of `.env` file in the project root directory and add the following variables:
+   ```
+   OPENAI_API_KEY=YOUR-API-KEY
+   GROQ_API_KEY=YOUR-API-KEY
+   ANTHROPIC_API_KEY=YOUR-API-KEY
 
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+   JOB_POSTING_URL=YOUR-JOB-POSTING-URL
+   ```
+   Replace `YOUR-API-KEY` with your actual API key and `YOUR-JOB-POSTING-URL` with your desired job.
 
-```bash
-poetry run tailor_resume
-```
+## Usage
 
-This command initializes the tailor-resume Crew, assembling the agents and assigning them tasks as defined in your configuration.
+1. Ensure you're in the project directory and your virtual environment is activated.
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+2. Download your resume from your Linkedin Profile in PDF format and put it on `/src/resumes`.
 
-## Understanding Your Crew
+3. On `src/tailor_resume/main.py` modify:
+   - `base_resume` to the path of your base resume
+   - `linkedin_source_cv_filename` to the path of your Linkedin resume 
+   - `linkedin_target_cv_filename` to the path of your target resume in MD format
 
-The tailor-resume Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
 
-## Support
+4. Run the main script:
+   ```bash
+   poetry run tailor_resume
+   ```
 
-For support, questions, or feedback regarding the TailorResume Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+5. The program will generate a tailored resume based on your Linkedin resume and the job description.
 
-Let's create wonders together with the power and simplicity of crewAI.
+6. The tailored resume will be saved as a Markdown file in the root directory.
+
+## Configuration
+
+Users can customize the program by modifying:
+- Agent definitions in `config/agents.yaml`
+- Task definitions in `config/tasks.yaml`
+- The `crew.py` file to add custom logic or tools
+
+## Advanced Features
+
+- The program includes a training function that can improve the AI agents' performance over multiple iterations
+- It uses various AI models, including Claude from Anthropic and Llama3 from Groq, for different tasks
+
+## Tools and Technologies
+
+- Web scraping for job requirement extraction
+- PDF parsing for resume reading
+- Markdown file creation for output
+- Integration with various AI models and APIs
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the

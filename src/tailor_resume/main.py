@@ -8,9 +8,9 @@ load_dotenv()
 def run():
     inputs = {
         "job_posting": os.getenv('JOB_POSTING_URL'),
-        "base_resume": "/home/rafaelcalassara/Programming/AI/Agents/cv_maker/src/resumes/base_resume.md",
-        "linkedin_source_cv_filename": "/home/rafaelcalassara/Programming/AI/Agents/cv_maker/src/resumes/linkedin_cv_rafael_pt_br.pdf",
-        "linkedin_target_cv_filename": "/home/rafaelcalassara/Programming/AI/Agents/cv_maker/src/resumes/target_resume.md",
+        "base_resume": "/src/resumes/base_resume.md",
+        "linkedin_source_cv_filename": "/src/resumes/source_resume.pdf",
+        "linkedin_target_cv_filename": "/src/resumes/target_resume.md",
         "crew_generated_resume": "crew_generated_resume.md",
     }
     TailorResumeCrew().crew().kickoff(inputs=inputs)
@@ -21,10 +21,10 @@ def train():
     Train the crew for a given number of iterations.
     """
     inputs = {
-        "job_posting": "https://www.linkedin.com/jobs/view/4004986314/",
-        "base_resume": "/home/rafaelcalassara/Programming/AI/Agents/cv_maker/src/resumes/base_resume.md",
-        "linkedin_source_cv_filename": "src/resumes/source_resume.pdf",
-        "linkedin_target_cv_filename": "/home/rafaelcalassara/Programming/AI/Agents/cv_maker/src/resumes/target_resume.md",
+        "job_posting": os.getenv('JOB_POSTING_URL'),
+        "base_resume": "/src/resumes/base_resume.md",
+        "linkedin_source_cv_filename": "/src/resumes/source_resume.pdf",
+        "linkedin_target_cv_filename": "/src/resumes/target_resume.md",
         "crew_generated_resume": "crew_generated_resume.md",
     }
     try:
